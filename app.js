@@ -2,7 +2,8 @@ var electron = require('electron');  // Module to control application life.
 //var BrowserWindow = require('browser-window');  // Module to create native browser window.
 const {app, ipcRenderer, BrowserWindow, ipcMain, dialog} =  require('electron');
 const Tx = require('ethereumjs-tx').Transaction
-const EthereumEncryption = require('ethereum-encryption');
+var crypto = require("crypto");
+var eccrypto = require("eccrypto");
 var pkkey = '';
 var Web3 = require('web3');
 const web3 = new Web3('https://mainnet.infura.io/v3/914bc8ee83c746a9801f4a57f0432aff');
@@ -12,6 +13,9 @@ var oldresult = 999999999;
 var myetheraddress;
 var globalGwei = "10";
 var publickey = '';
+const EthCrypto = require('eth-crypto');
+//var bitcore = require('bitcore-lib');
+var ECIES = require('bitcore-ecies');
 
 
 const contractAddress = "0x8ea82F048Db5ab3719A3Eb7BE61605181f01B3Bf"
@@ -88,68 +92,29 @@ ipcMain.on('sendmemoplease', (event, memodetails) => {
 
 
   } else {
+    //omgbbqhax
     console.log("ok");
     var xxnewamo = web3.utils.toWei(memodetails["amount"], 'ether');
     console.log("xxnewamo", xxnewamo);
-    const grpice  = web3.eth.getGasPrice().then(function(networkgasprice){
-      console.log("networkgasprice",networkgasprice);
-    var MyContract = new web3.eth.Contract(abi, contractAddress, {
-        from: myetheraddress,
-        gasPrice: web3.utils.toWei(networkgasprice, 'gwei')
-    });
-
-
-
-
-    MyContract.methods.sendtokenwithmemo(xxnewamo, memodetails["rece"], memodetails["memoo"] ).estimateGas({from: myetheraddress})
-      .then(function(gasAmount){
-              console.log("gasolina", gasAmount);
-                console.log("gasolin222a", web3.utils.toHex(web3.utils.toWei(networkgasprice, 'gwei')));
-
-              web3.eth.getTransactionCount(myetheraddress).then(function(nonce){
-                console.log("my nonce value is here:", nonce);
-                dataTx = MyContract.methods.sendtokenwithmemo(xxnewamo, memodetails["rece"], memodetails["memoo"]).encodeABI();  //The encoded ABI of the method
-
-
-                 console.log("dataTx",dataTx);
-                 var rawTx = {
-                 'from': myetheraddress,
-                 'chainId': 1,
-                 'gas': web3.utils.toHex(gasAmount),
-                 'data':dataTx,
-                 'to': contractAddress,
-                 'gasPrice': web3.utils.toHex(networkgasprice),
-                 'nonce':  web3.utils.toHex(nonce) }
-
-                 var tx = new Tx(rawTx);
-                 console.log("tx",tx);
-                 tx.sign(pkkey);
-                 var serializedTx = tx.serialize();
-                 console.log("serializedTx",serializedTx);
-
-                 web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).then(function(TxHash){
-                    console.log("TxHash",TxHash);
-                    console.log("real tx hash",TxHash["transactionHash"]);
-                    mainWindow.send("showtx", TxHash["transactionHash"]);
-                });
-              });
-      })
-      .catch(function(err){
-            console.log("gasolina err", err);
-      });
-
-
-    }).catch(function(err){
-      console.log(err)
-    });
-
-
-
-
+    console.log(memodetails["rece"]);
+    console.log(memodetails["pubbkey"]);
+    const address = EthCrypto.publicKey.toAddress(memodetails["pubbkey"]);
+    console.log(address);
+    encplease(memodetails["pubbkey"]);
   }
+
+
+  
   //omgbb
 
 });
+
+async function encplease(pubkey) {
+
+  const encrypted = await EthCrypto.encryptWithPublicKey(pubkey,'foobar');
+  console.log(encrypted);
+
+}
 
 
 ipcMain.on('receivekey', (event, privateKey) => {
@@ -163,8 +128,7 @@ ipcMain.on('receivekey', (event, privateKey) => {
    console.log(`0x${hdwallet.derive(`m/44'/60'/0'/0/0`).getAddress().toString('hex')}`)
    var adasd = hdwallet.derive(`m/44'/60'/0'/0/0`).getPrivateKey().toString('hex')
    var privateKey = Buffer.from(adasd, 'hex' );
-   console.log("public keyyy",  hdwallet.derive(`m/44'/60'/0'/0/0`).getPublicKey().toString('hex'));
-   publickey =  hdwallet.derive(`m/44'/60'/0'/0/0`).getPublicKey().toString('hex')
+   publickey = eccrypto.getPublic(privateKey);
 
 
    myetheraddress = `0x${hdwallet.derive(`m/44'/60'/0'/0/0`).getAddress().toString('hex')}`; //ethUtils.privateToAddress(privateKey).toString('hex')
@@ -179,7 +143,8 @@ ipcMain.on('receivekey', (event, privateKey) => {
    var privateKey = Buffer.from(privateKey, 'hex' );
    try {
      myetheraddress = ethUtils.privateToAddress(privateKey).toString('hex');
-     myetheraddress = ethUtils.privateToAddress(privateKey).toString('hex');
+     publickey = eccrypto.getPublic(privateKey);
+
      console.log(privateKey);
      console.log(myetheraddress);
      pkkey = privateKey;
