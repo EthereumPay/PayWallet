@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en" class="deeppurple-theme">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="Maxartkiller">
+
+    <title>Memo Wallet</title>
+
+    <!-- Material design icons CSS -->
+    <link rel="stylesheet" href="vendor/materializeicon/material-icons.css">
+
+    <!-- Roboto fonts CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap-4.4.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Swiper CSS -->
+    <link href="vendor/swiper/css/swiper.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+
+
+    <div class="wrapper homepage">
+        <!-- header -->
+        <div class="header">
+            <div class="row no-gutters">
+
+                <div class="col text-center"><img src="img/logo-header.png" alt="" class="header-logo"></div>
+
+            </div>
+        </div>
+        <!-- header ends -->
+
+        <div class="container">
+            <div class="card blue-theme-bg shadow mt-4 h-190">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <figure class="avatar avatar-60"><img id="profileimg" src="" alt=""></figure>
+                        </div>
+                        <div class="col pl-0 align-self-center">
+                            <input type="text" id="ethaddr" style="width:100%; background-color:transparent;color:white;border:0 solid black;" />
+                            <input type="text" id="publickey" style="width:100%; background-color:transparent;color:white;border:0 solid black;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container top-100">
+
+
+            <div class="card mb-4 shadow">
+                <div class="card-body border-bottom">
+                    <div class="row">
+
+                        <div class="col" id="bbox" style="display:none;">
+                            <h6 class="mb-0 font-weight-normal" id="balance">***</h6>
+                            <p class="text-mute">Balance</p>
+                        </div>
+
+                        <div class="col login" id="llogin">
+                            <input id="priv" type="text" style="width:100%; "  placeholder="Private Key or 12 Words" name="pkey"/><br>
+                              <button id="connect" class="btn btn-primary"  style="width:100%; ">Connect</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="container">
+
+
+          <h6 class="subtitle">Send Memo</h6>
+          <div class="card shadow border-0 mb-3">
+              <div class="card-body">
+                  <div class="row align-items-center">
+
+
+                      <div class="col login">
+                          <input type="text" style="width:100%; "  placeholder="receiver" id="rece" name="rece"/><br>
+                          <input type="number" style="width:100%;" placeholder="amount" id="amountify" name="amountify"/><br>
+                          <input type="text" style="width:100%; "  placeholder="memo" id="memo" name="memo"/><br>
+
+                          <button class="btn btn-primary" id="smemo"  style="width:100%; ">Send</button>
+                          <a id="showtransaction" href="" target="_blank"></a>
+
+
+                      </div>
+
+
+
+                  </div>
+              </div>
+          </div>
+            <div>
+            <h6 class="subtitle">Memo TXs List</h6>
+          </div>
+          <div class="clear"></div>
+
+            <div  id="txlist">
+
+
+
+
+
+            </div>
+
+            <button id="rreloader" class="btn btn-primary" style="width:100%;">Reload</button>
+
+        </div>
+
+
+
+
+    <!-- omg -->
+    </div>
+
+    <!-- notification -->
+    <div class="notification bg-white shadow-sm border-primary">
+        <div class="row">
+            <div class="col-auto align-self-center pr-0">
+                <i class="material-icons text-primary md-36">fullscreen</i>
+            </div>
+            <div class="col">
+                <h6>Viewing in Phone?</h6>
+                <p class="mb-0 text-secondary">Double tap to enter into fullscreen mode for each page.</p>
+            </div>
+            <div class="col-auto align-self-center pl-0">
+                <button class="btn btn-link closenotification"><i class="material-icons text-secondary text-mute md-18 ">close</i></button>
+            </div>
+        </div>
+    </div>
+    <!-- notification ends -->
+
+    <!-- color chooser menu start -->
+    <div class="modal fade " id="colorscheme" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content ">
+                <div class="modal-header theme-header border-0">
+                    <h6 class="">Color Picker</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div class="text-center theme-color">
+                        <button class="m-1 btn red-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="red-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn blue-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="blue-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn yellow-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="yellow-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn green-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="green-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn pink-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="pink-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn orange-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="orange-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn purple-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="purple-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn deeppurple-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="deeppurple-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn lightblue-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="lightblue-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn teal-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="teal-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn lime-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="lime-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn deeporange-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="deeporange-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn gray-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="gray-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                        <button class="m-1 btn black-theme-bg text-white btn-rounded-54 shadow-sm" data-theme="black-theme"><i class="material-icons w-50">color_lens_outline</i></button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-6 text-left">
+                        <div class="row">
+                            <div class="col-auto text-right align-self-center"><i class="material-icons text-warning vm">wb_sunny</i></div>
+                            <div class="col-auto text-center align-self-center px-0">
+                                <div class="custom-control custom-switch float-right">
+                                    <input type="checkbox" name="themelayout" class="custom-control-input" id="theme-dark">
+                                    <label class="custom-control-label" for="theme-dark"></label>
+                                </div>
+                            </div>
+                            <div class="col-auto text-left align-self-center"><i class="material-icons text-dark vm">brightness_2</i></div>
+                        </div>
+                    </div>
+                    <div class="col-6 text-right">
+                        <div class="row">
+                            <div class="col-auto text-right align-self-center">LTR</div>
+                            <div class="col-auto text-center align-self-center px-0">
+                                <div class="custom-control custom-switch float-right">
+                                    <input type="checkbox" name="rtllayout" class="custom-control-input" id="theme-rtl">
+                                    <label class="custom-control-label" for="theme-rtl"></label>
+                                </div>
+                            </div>
+                            <div class="col-auto text-left align-self-center">RTL</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- color chooser menu ends -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="addmoney" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center pt-0">
+                    <img src="img/infomarmation-graphics2.png" alt="logo" class="logo-small">
+                    <div class="form-group mt-4">
+                        <input type="text" class="form-control form-control-lg text-center" placeholder="Enter amount" required="" autofocus="">
+                    </div>
+                    <p class="text-mute">You will be redirected to payment gatway to procceed further. Enter amount in USD.</p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-default btn-lg btn-rounded shadow btn-block" class="close" data-dismiss="modal">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- jquery, popper and bootstrap js -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/blockies.min.js"></script>
+    <script src="vendor/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+
+    <!-- swiper js -->
+    <script src="vendor/swiper/js/swiper.min.js"></script>
+
+    <!-- cookie js -->
+    <script src="vendor/cookie/jquery.cookie.js"></script>
+
+    <!-- template custom js -->
+    <script src="js/main.js"></script>
+
+    <!-- page level script -->
+
+
+<script type="text/javascript">
+window.$ = window.jQuery = require('jquery');
+var Web3 = require('web3');
+//const ipc = require('electron').ipcRenderer;
+const { ipcRenderer } = require('electron');
+let mybutton = document.querySelector("#connect");
+let ethereumPrivateKey =  document.querySelector("#priv");
+
+
+$("#connect").click(function() {
+  $("#connect").html('Please waıt.');
+  $("#connect").attr("disabled", true);
+  ipcRenderer.send("receivekey", ethereumPrivateKey.value.trim());
+});
+
+
+$("#rreloader").click(function() {
+  $("#txlist").html("");
+ipcRenderer.send("rreloader", "reload");
+
+});
+
+$("#smemo").click(function() {
+
+   var receiver = $("#rece").val();
+   var amount = $("#amountify").val();
+   var memoo  = $("#memo").val();
+
+   var memodetails = {}
+   memodetails["rece"] = receiver;//.trim();
+   memodetails["amount"] = amount;//.trim();
+   memodetails["memoo"] = memoo;//.trim();
+
+   $("#smemo").html('Please waıt.');
+   $("#smemo").attr("disabled", true);
+
+  ipcRenderer.send("sendmemoplease", memodetails);
+});
+
+
+ipcRenderer.on('enableagain', (event, msg) => {
+$("#connect").attr("disabled", false);
+});
+
+ipcRenderer.on('enablememoagain', (event, msg) => {
+  $("#smemo").html("SEND");
+  $("#smemo").attr("disabled", false);
+});
+
+ipcRenderer.on('showtx', (event, msg) => {
+  $("#smemo").html("SEND");
+  $("#smemo").attr("disabled", false);
+  $("#showtransaction").attr("href", "https://etherscan.io/tx/"+msg);
+  $("#showtransaction").text("https://etherscan.io/tx/"+msg)
+});
+
+
+ipcRenderer.on('appendnewmemo', (event, msg) => {
+  $("#txlist").prepend('<div class="card shadow border-0 mb-3">'+
+  '<div class="card-body">'+
+      '<div class="row align-items-center">'+
+          '<div class="col-auto pr-0">'+
+              '<div class="avatar avatar-60 no-shadow border-0 ">'+
+                  '<img class="'+msg["3"] +'" src="img/swal.png" alt="">'+
+              '</div>'+
+          '</div>'+
+          '<div class="col">'+
+              '<h6 class="font-weight-normal mb-1">'+ Web3.utils.fromWei(msg["1"] , 'ether') +' EER </h6>'+
+              '<p class="text-mute small text-secondary"> '+ msg["2"] +' </p>'+
+          '</div>'+
+      '</div>'+
+      '</div>'+
+  '</div>');
+
+  var icon = blockies.create({ // All options are optional
+    seed: msg["3"], // seed used to generate icon data, default: random
+    //color: '#dfe', // to manually specify the icon color, default: random
+    //bgcolor: '#aaa', // choose a different background color, default: random
+    size: 15, // width/height of the icon in blocks, default: 8
+    scale: 3, // width/height of each block in pixels, default: 4
+    //spotcolor: '#000' // each pixel has a 13% chance of being of a third color,
+    // default: random. Set to -1 to disable it. These "spots" create structures
+    // that look like eyes, mouths and noses.
+  });
+  console.log(icon);
+   $('.'+msg["3"]).attr('src', icon.toDataURL());
+
+
+  //alert(msg["2"])
+
+
+
+});
+
+
+ipcRenderer.on('getdatils', (event, msg) => {
+
+  console.log("msg", msg);
+  //alert(msg["eerbalance"]);
+  document.getElementById("balance").innerHTML = msg["eerbalance"] + " EER and " + msg["ethbalance"] + " ETH"  ;
+  //document.getElementById("publickey").innerHTML = "Public Key 4 ENC "+msg["publickey"];
+  $("#publickey").val(msg["publickey"]);
+  $("#ethaddr").val(msg["address"]);
+  document.getElementById("llogin").style.display = "none";
+  document.getElementById("bbox").style.display = "block"; //balance
+
+  var icon = blockies.create({ // All options are optional
+    seed: msg["address"], // seed used to generate icon data, default: random
+    //color: '#dfe', // to manually specify the icon color, default: random
+    //bgcolor: '#aaa', // choose a different background color, default: random
+    size: 15, // width/height of the icon in blocks, default: 8
+    scale: 3, // width/height of each block in pixels, default: 4
+    //spotcolor: '#000' // each pixel has a 13% chance of being of a third color,
+    // default: random. Set to -1 to disable it. These "spots" create structures
+    // that look like eyes, mouths and noses.
+  });
+  console.log(icon);
+   $('#profileimg').attr('src', icon.toDataURL());
+
+
+
+
+});
+
+
+
+
+
+
+</script>
+
+</body>
+
+</html>
