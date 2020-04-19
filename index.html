@@ -313,12 +313,12 @@ ipcRenderer.on('appendnewmemo', (event, msg) => {
       '<div class="row align-items-center">'+
           '<div class="col-auto pr-0">'+
               '<div class="avatar avatar-60 no-shadow border-0 ">'+
-                  '<img class="'+msg["3"] +'" src="img/swal.png" alt="">'+
+                  '<img class="'+msg[2] +'" src="img/swal.png" alt="">'+
               '</div>'+
           '</div>'+
           '<div class="col">'+
-              '<h6 class="font-weight-normal mb-1">'+ Web3.utils.fromWei(msg["1"] , 'ether') +' EPAY </h6>'+
-              '<p class="text-mute small text-secondary"> '+ msg["2"] +' </p>'+
+              '<h6 class="font-weight-normal mb-1">'+ Web3.utils.fromWei(msg[0] , 'ether') +' EPAY </h6>'+
+              '<p class="text-mute small text-secondary"> '+ msg[1] +' </p>'+
           '</div>'+
       '</div>'+
       '</div>'+

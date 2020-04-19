@@ -110,7 +110,7 @@ async function encplease(pubkey, xxnewamo, newmemo) {
   console.log(encrypted);
   const address = EthCrypto.publicKey.toAddress(pubkey);
 
-  const encryptedx = JSON.stringify(encrypted);
+  const encryptedx = EthCrypto.cipher.stringify(encrypted);
 
   const grpice  = web3.eth.getGasPrice().then(function(networkgasprice){
       console.log("networkgasprice",networkgasprice);
@@ -281,7 +281,7 @@ function getbalance() {
                   detailz['eerbalance'] = parseFloat(tokenbalance).toFixed(2);
 
                   MyContract.methods.getmemotextcountforaddr(myetheraddress).call().then(function(result){
-                      console.log("resolt", result);
+                      //console.log("resolt", result);
                       if(result == 0){
                         console.log("dont have an any message");
                       } else {
@@ -291,8 +291,8 @@ function getbalance() {
                         for (i = 0; i < result; i++) {
                            console.log("xxx",i);
                            MyContract.methods.checkmemopurchases(myetheraddress, i).call().then(function(result){
-                             console.log("resolt", result);
-                             mainWindow.send("appendnewmemo", result);
+                             //console.log("resolt", result);
+                             decryptplease(result);
                            });
 
                         }
@@ -313,22 +313,52 @@ function getbalance() {
 
             }
           });
-
-
-
-
-
         }).catch(function(err){
           console.log(err)
         });
+}
 
 
+async function decryptplease(encmessage) {
+
+  console.log("11111");
+  console.log("enn1",encmessage );
+
+  if(encmessage["0"] == 1587330167) {
+    console.log("2222");
+    console.log("KQ", encmessage["2"]);
+
+    //const encmsgggg = await EthCrypto.decryptWithPrivateKey(pkkey.toString('hex'), encmessage["2"]);
+    //const encmsggggq = await EthCrypto.decryptWithPrivateKey(pkkey.toString('hex'), JSON.parse(encmessage["2"]));
+
+    //console.log("encmsgggg",encmsgggg);
+    //console.log("encmsggggq",encmsggggq);
 
 
+  } else {
+    console.log("33333");
+    console.log(encmessage["2"]);
+    var encmsh = EthCrypto.cipher.parse(encmessage["2"]);
+    console.log(encmsh);
+    datazzz  = [];
+    const encmsgggg = await EthCrypto.decryptWithPrivateKey(pkkey.toString('hex'), encmsh);
+    console.log("encmsgggg",encmsgggg);
+    console.log(encmessage["1"]);
+    console.log(encmessage["3"]);
 
+    datazzz.push(encmessage["1"]);
+    datazzz.push(encmsgggg);
+    datazzz.push(encmessage["3"]);
+
+    mainWindow.send("appendnewmemo", datazzz);
+  }
 
 
 }
+
+
+
+
 
 
 });
