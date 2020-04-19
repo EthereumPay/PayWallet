@@ -317,7 +317,7 @@ ipcRenderer.on('appendnewmemo', (event, msg) => {
               '</div>'+
           '</div>'+
           '<div class="col">'+
-              '<h6 class="font-weight-normal mb-1">'+ Web3.utils.fromWei(msg["1"] , 'ether') +' EER </h6>'+
+              '<h6 class="font-weight-normal mb-1">'+ Web3.utils.fromWei(msg["1"] , 'ether') +' EPAY </h6>'+
               '<p class="text-mute small text-secondary"> '+ msg["2"] +' </p>'+
           '</div>'+
       '</div>'+
@@ -348,8 +348,7 @@ ipcRenderer.on('appendnewmemo', (event, msg) => {
 ipcRenderer.on('getdatils', (event, msg) => {
 
   console.log("msg", msg);
-  //alert(msg["eerbalance"]);
-  document.getElementById("balance").innerHTML = msg["eerbalance"] + " EER and " + msg["ethbalance"] + " ETH"  ;
+  document.getElementById("balance").innerHTML = msg["eerbalance"] + " EPAY and " + msg["ethbalance"] + " ETH"  ;
   //document.getElementById("publickey").innerHTML = "Public Key 4 ENC "+msg["publickey"];
   $("#publickey").val(msg["publickey"]);
   $("#ethaddr").val(msg["address"]);
