@@ -95,24 +95,75 @@ ipcMain.on('sendmemoplease', (event, memodetails) => {
     //omgbbqhax
     console.log("ok");
     var xxnewamo = web3.utils.toWei(memodetails["amount"], 'ether');
-    console.log("xxnewamo", xxnewamo);
-    console.log(memodetails["rece"]);
-    console.log(memodetails["pubbkey"]);
-    const address = EthCrypto.publicKey.toAddress(memodetails["pubbkey"]);
-    console.log(address);
-    encplease(memodetails["pubbkey"]);
+    encplease(memodetails["pubbkey"], xxnewamo, memodetails["memoo"]);
   }
 
 
-  
+
   //omgbb
 
 });
 
-async function encplease(pubkey) {
+async function encplease(pubkey, xxnewamo, newmemo) {
 
-  const encrypted = await EthCrypto.encryptWithPublicKey(pubkey,'foobar');
+  const encrypted = await EthCrypto.encryptWithPublicKey(pubkey, newmemo);
   console.log(encrypted);
+  const address = EthCrypto.publicKey.toAddress(pubkey);
+
+  const encryptedx = JSON.stringify(encrypted);
+
+  const grpice  = web3.eth.getGasPrice().then(function(networkgasprice){
+      console.log("networkgasprice",networkgasprice);
+    var MyContract = new web3.eth.Contract(abi, contractAddress, {
+        from: myetheraddress,
+        gasPrice: web3.utils.toWei(networkgasprice, 'gwei')
+    });
+
+
+
+
+    MyContract.methods.sendtokenwithmemo(xxnewamo, address, encryptedx).estimateGas({from: myetheraddress})
+      .then(function(gasAmount){
+              console.log("gasolina", gasAmount);
+                console.log("gasolin222a", web3.utils.toHex(web3.utils.toWei(networkgasprice, 'gwei')));
+
+              web3.eth.getTransactionCount(myetheraddress).then(function(nonce){
+                console.log("my nonce value is here:", nonce);
+                dataTx = MyContract.methods.sendtokenwithmemo(xxnewamo, address, encryptedx).encodeABI();  //The encoded ABI of the method
+
+
+                 console.log("dataTx",dataTx);
+                 var rawTx = {
+                 'from': myetheraddress,
+                 'chainId': 1,
+                 'gas': web3.utils.toHex(gasAmount),
+                 'data':dataTx,
+                 'to': contractAddress,
+                 'gasPrice': web3.utils.toHex(networkgasprice),
+                 'nonce':  web3.utils.toHex(nonce) }
+
+                 var tx = new Tx(rawTx);
+                 console.log("tx",tx);
+                 tx.sign(pkkey);
+                 var serializedTx = tx.serialize();
+                 console.log("serializedTx",serializedTx);
+
+                 web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).then(function(TxHash){
+                    console.log("TxHash",TxHash);
+                    console.log("real tx hash",TxHash["transactionHash"]);
+                    mainWindow.send("showtx", TxHash["transactionHash"]);
+                });
+              });
+      })
+      .catch(function(err){
+            console.log("gasolina err", err);
+      });
+
+
+    }).catch(function(err){
+      console.log(err)
+    });
+
 
 }
 
