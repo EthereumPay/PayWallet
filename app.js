@@ -2,6 +2,7 @@ var electron = require('electron');  // Module to control application life.
 //var BrowserWindow = require('browser-window');  // Module to create native browser window.
 const {app, ipcRenderer, BrowserWindow, ipcMain, dialog} =  require('electron');
 const Tx = require('ethereumjs-tx').Transaction
+const EthereumEncryption = require('ethereum-encryption');
 var pkkey = '';
 var Web3 = require('web3');
 const web3 = new Web3('https://mainnet.infura.io/v3/914bc8ee83c746a9801f4a57f0432aff');

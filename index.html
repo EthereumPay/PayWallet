@@ -92,6 +92,7 @@
 
                       <div class="col login">
                           <input type="text" style="width:100%; "  placeholder="receiver" id="rece" name="rece"/><br>
+                          <input type="text" style="width:100%; "  placeholder="Receiver's public key" id="pubkeyy" name="pubkeyy"/><br>
                           <input type="number" style="width:100%;" placeholder="amount" id="amountify" name="amountify"/><br>
                           <input type="text" style="width:100%; "  placeholder="memo" id="memo" name="memo"/><br>
 
@@ -277,13 +278,15 @@ $("#smemo").click(function() {
    var receiver = $("#rece").val();
    var amount = $("#amountify").val();
    var memoo  = $("#memo").val();
+   var pubkeyy = $("#pubkeyy").val();
 
    var memodetails = {}
    memodetails["rece"] = receiver;//.trim();
    memodetails["amount"] = amount;//.trim();
    memodetails["memoo"] = memoo;//.trim();
+   memodetails["pubkeyy"] = pubkeyy;
 
-   $("#smemo").html('Please waıt.');
+   $("#smemo").html('Please wait.');
    $("#smemo").attr("disabled", true);
 
   ipcRenderer.send("sendmemoplease", memodetails);

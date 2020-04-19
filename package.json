@@ -22,6 +22,7 @@
   "dependencies": {
     "electron": "^7.1.2",
     "electron-packager": "^14.2.1",
+    "ethereum-encryption": "0.0.5",
     "ethereum-hdwallet": "0.0.26",
     "ethereumjs-tx": "^2.1.2",
     "ethereumjs-wallet": "^0.6.3",
