@@ -1,21 +1,21 @@
 {
-  "name": "rush",
+  "name": "PayWallet",
   "version": "1.0.0",
-  "description": "Ethereum eRush's memo supported mobile wallet ",
+  "description": "Ethereum pay's encrypted message wallet ",
   "main": "app.js",
   "scripts": {
     "start": "electron ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ethereum-Rush/memowallet.git"
+    "url": "git+https://github.com/EthereumPay/PayWallet.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Ethereum-Rush/memowallet/issues"
+    "url": "https://github.com/EthereumPay/PayWallet/issues"
   },
-  "homepage": "https://github.com/Ethereum-Rush/memowallet#readme",
+  "homepage": "https://github.com/EthereumPay/PayWallet#readme",
   "devDependencies": {
     "electron": "^7.1.2"
   },
