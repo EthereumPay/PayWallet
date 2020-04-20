@@ -8,6 +8,7 @@ var pkkey = '';
 var Web3 = require('web3');
 const web3 = new Web3('https://mainnet.infura.io/v3/914bc8ee83c746a9801f4a57f0432aff');
 var hdkey = require('ethereumjs-wallet/hdkey');
+var Wallet = require('ethereumjs-wallet');
 const ethUtils = require('ethereumjs-util');
 var oldresult = 999999999;
 var myetheraddress;
@@ -194,7 +195,11 @@ ipcMain.on('receivekey', (event, privateKey) => {
    var privateKey = Buffer.from(privateKey, 'hex' );
    try {
      myetheraddress = ethUtils.privateToAddress(privateKey).toString('hex');
-     publickey = eccrypto.getPublic(privateKey);
+
+     const privateKeyBuffer = ethUtils.toBuffer(privateKey);
+     const wallet = Wallet.fromPrivateKey(privateKeyBuffer);
+     publickey = wallet.getPublicKey().toString('hex');
+    console.log("publickey", publickey);
 
      console.log(privateKey);
      console.log(myetheraddress);
@@ -242,7 +247,6 @@ function getbalance() {
 
 
         const grpice  = web3.eth.getGasPrice().then(function(networkgasprice){
-
 
           console.log("networkgasprice",networkgasprice)
 
